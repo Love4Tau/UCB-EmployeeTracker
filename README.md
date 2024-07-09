@@ -23,8 +23,18 @@
   ## Usage
   ![alt text](./assets/images/CLI%20app.png)
 
+  [Employee tracker CLI App Video](https://app.screencastify.com/v3/watch/gOsnM1QI0SQ7lKvMV7Va)
+
   ## Credits
-  I re-watched our cloud recordings and looked through our class activities for assistance setting up the connection.js, schema.sql and seeds.sql! I had to use the xpert tool to refresh my memory on how to source the schema and seeds file. I also had to use the ai tool for assistance fixing mysql errors. I used google to search for how to add values to tables: https://www.w3schools.com/mysql/mysql_insert.asp
+  I re-watched our cloud recordings and looked through our class activities for assistance setting up the connection.js, schema.sql and seeds.sql! I had to use the xpert tool to refresh my memory on how to source the schema and seeds file. I also had to use the ai tool for assistance fixing mysql errors. 
+  
+  I used google to search for how to add values to tables: 
+  https://www.w3schools.com/mysql/mysql_insert.asp
+
+  Google searches:
+  https://stackoverflow.com/questions/52580375/database-how-to-get-multiple-values-from-two-tables-having-one-common-column
+  https://www.w3schools.com/sql/func_mysql_concat.asp
+  https://www.w3schools.com/js/js_switch.asp
 
   ## License
   
