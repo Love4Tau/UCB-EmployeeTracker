@@ -40,7 +40,7 @@ function init() {
                 break;
 
             case "Quit":
-                connection.end();
+                db.end();
                 break;
 
             default:
@@ -89,6 +89,108 @@ function viewAllEmployees() {
 }
 
 function addDepartment() {
-    
+    inquirer.prompt({
+        type: "input",
+        name: "name",
+        message: "What is the name of the department you'd like to add?"
+    }).then(answer => {
+        const query = `INSERT INTO departments(departments_name) VALUES (?)`
+        db.query(query, [answer.name], (error, res) => {
+            if(error) {
+                console.error(error.message);
+                return init();
+            }
+            console.log("Successfully Added Department!")
+            init();
+        })
+    })
 }
+
+function addRole() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "title",
+            message: "What is the title of the new role?",
+        },
+
+        {
+            type: "input",
+            name: "salary",
+            message: "What is the salary of the new role?",
+        },
+
+        {
+            type: "input",
+            name: "departmentsId",
+            message: "What is the department ID of the new role?",
+        },
+
+    ]).then((answer) => {
+        const query = `INSERT INTO roles(title, salary, departments_id) VALUES (?,?,?)`;
+        db.query(query, [answer.title, answer.salary, answer.departmentsId], (error, res) => {
+            if(error) {
+                console.error(error.message);
+                return init();
+            }
+            console.log("Successfully Added New Role!")
+            init();
+        })
+    })
+}
+
+function addEmployee() {
+    db.query("SELECT id, title FROM roles", (error, res) => {
+        if(error) {
+            console.error(error.message);
+            return;
+        }
+        const allRoles = res.map(({id, title}) => ({
+            name: title,
+            value: id,
+        }));
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "firstName",
+            message: "What is the first name of the new employee?",
+        },
+
+        {
+            type: "input",
+            name: "lastName",
+            message: "What is the last name of the new employee?",
+        },
+
+        {
+            type: "list",
+            name: "roleId",
+            message: "Select the employee role:",
+            choices: allRoles,
+        },
+
+        {
+            type: "input",
+            name: "managerId",
+            message: "What is the manager ID for the new employee?",
+        },
+
+    ]).then((answer) => {
+        const query = `INSERT INTO employees(first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`;
+        db.query(query, [answer.firstName, answer.lastName, answer.roleId, answer.managerId], (error, res) => {
+            if(error) {
+                console.error(error.message);
+                return init();
+            }
+            console.log("Successfully Added New employee!")
+            init();
+        })
+    })
+    })
+}
+
+// function updateEmployeeRole() {
+
+// }
+
 init();
