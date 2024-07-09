@@ -149,6 +149,17 @@ function addEmployee() {
             name: title,
             value: id,
         }));
+
+    db.query("SELECT id, CONCAT(first_name,' ',last_name) AS managerName FROM employees", (error, res) => {
+        if(error) {
+            console.error(error.message);
+            return;
+        }
+        const allManagers = res.map(({id, managerName}) => ({
+            name: managerName,
+            value: id,
+        }));
+
     inquirer.prompt([
         {
             type: "input",
@@ -170,9 +181,10 @@ function addEmployee() {
         },
 
         {
-            type: "input",
+            type: "list",
             name: "managerId",
-            message: "What is the manager ID for the new employee?",
+            message: "Select the employee's manager:",
+            choices: allManagers,
         },
 
     ]).then((answer) => {
@@ -185,6 +197,7 @@ function addEmployee() {
             console.log("Successfully Added New employee!")
             init();
         })
+    })
     })
     })
 }
