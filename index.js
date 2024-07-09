@@ -202,8 +202,55 @@ function addEmployee() {
     })
 }
 
-// function updateEmployeeRole() {
+function updateEmployeeRole() {
+    db.query("SELECT id, CONCAT(first_name,' ',last_name) AS employeeNames FROM employees", (error, res) => {
+        if(error) {
+            console.error(error.message);
+            return;
+        }
+        const allEmps = res.map(({id, employeeNames}) => ({
+            name: employeeNames,
+            value: id,
+        }));
+    db.query("SELECT id, title FROM roles", (error, roles) => {
+        if(error) {
+            console.error(error.message);
+            return;
+        }
+        const empRoles = roles.map(role => ({
+            name: role.title,
+            value: role.id,
+        }));
 
-// }
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "employeeToUpdate",
+                message: "Which employee would you like to update the role for?",
+                choices: allEmps,
+            },
+
+            {
+                type: "list",
+                name: "roleToUpdate",
+                message: "What is the employee's new role?",
+                choices: empRoles,
+            },
+        ]).then(answer =>{
+            const query = `UPDATE employees SET role_id = (?) WHERE id =(?)`;
+            db.query(query, [answer.roleToUpdate, answer.employeeToUpdate], (error, res) => {
+                if(error) {
+                    console.error(error.message);
+                    return init();
+                }
+                console.log("Successfully Updated Employee Role!")
+                init();
+            console.log(answer.employeeToUpdate, answer.roleToUpdate);
+            return init();
+            })
+        })
+    })
+})
+}
 
 init();
