@@ -48,4 +48,47 @@ function init() {
         }
     })
 }
+
+function viewAllDepartments() {
+    const query = "SELECT * FROM departments";
+
+    db.query(query, (error, res) => {
+        if(error) {
+            console.error(error.message);
+            return init();
+        }
+        console.table(res);
+        init();
+    })
+}
+
+function viewAllRoles() {
+    const query = "SELECT * FROM roles";
+
+    db.query(query, (error, res) => {
+        if(error) {
+            console.error(error.message);
+            return init();
+        }
+        console.table(res);
+        init();
+    })
+}
+
+function viewAllEmployees() {
+    const query = "SELECT * FROM employees";
+
+    db.query(query, (error, res) => {
+        if(error) {
+            console.error(error.message);
+            return init();
+        }
+        console.table(res);
+        init();
+    })
+}
+
+function addDepartment() {
+    
+}
 init();
